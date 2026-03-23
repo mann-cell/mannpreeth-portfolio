@@ -114,8 +114,8 @@ function TextContent({ typed }) {
           Contact Me
         </a>
         <a
-          href="/resume.pdf"
-          download
+          href="/Mannpreeth_MK_ UK Resume.pdf"
+          download="Mannpreeth_MK_Resume.pdf"
           className="inline-flex items-center justify-center gap-2 border border-teal-400/40 text-teal-400 px-8 py-3.5 rounded-full font-semibold text-sm hover:bg-teal-400/10 hover:scale-105 transition-all duration-300"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
