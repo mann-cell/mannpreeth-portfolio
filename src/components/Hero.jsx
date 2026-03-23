@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import profileImg from '../assets/profile.jpg'
 
 const roles = [
@@ -9,8 +9,8 @@ const roles = [
 ]
 
 function useTypewriter(words) {
-  const [text, setText]       = useState('')
-  const [wordIdx, setWordIdx] = useState(0)
+  const [text, setText]         = useState('')
+  const [wordIdx, setWordIdx]   = useState(0)
   const [deleting, setDeleting] = useState(false)
 
   useEffect(() => {
@@ -34,10 +34,40 @@ function useTypewriter(words) {
   return text
 }
 
+function Particles() {
+  const pts = useMemo(() => Array.from({ length: 28 }, (_, i) => ({
+    id: i,
+    x: Math.random() * 100,
+    y: Math.random() * 100,
+    size: Math.random() * 2 + 1,
+    dur: (Math.random() * 4 + 4).toFixed(1),
+    delay: (Math.random() * 6).toFixed(1),
+    opacity: (Math.random() * 0.25 + 0.08).toFixed(2),
+  })), [])
+
+  return (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      {pts.map(p => (
+        <div
+          key={p.id}
+          className="absolute rounded-full bg-teal-400"
+          style={{
+            left: `${p.x}%`,
+            top: `${p.y}%`,
+            width: p.size,
+            height: p.size,
+            opacity: p.opacity,
+            animation: `float ${p.dur}s ease-in-out ${p.delay}s infinite`,
+          }}
+        />
+      ))}
+    </div>
+  )
+}
+
 function TextContent({ typed }) {
   return (
     <div className="max-w-xl">
-      {/* Badge */}
       <div className="inline-flex items-center gap-2 bg-teal-400/10 border border-teal-400/30 text-teal-400 px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest uppercase mb-8">
         <span className="w-2 h-2 rounded-full bg-teal-400 animate-pulse" />
         Available for Opportunities
@@ -68,14 +98,30 @@ function TextContent({ typed }) {
       </p>
 
       <div className="flex flex-col sm:flex-row gap-4">
-        <a href="#projects" className="inline-flex items-center justify-center gap-2 bg-teal-400 text-[#07111f] px-8 py-3.5 rounded-full font-bold text-sm hover:bg-teal-300 hover:scale-105 transition-all duration-300 shadow-lg shadow-teal-400/30">
+        <a
+          href="#projects"
+          className="inline-flex items-center justify-center gap-2 bg-teal-400 text-[#07111f] px-8 py-3.5 rounded-full font-bold text-sm hover:bg-teal-300 hover:scale-105 transition-all duration-300 shadow-lg shadow-teal-400/30"
+        >
           See My Work
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
           </svg>
         </a>
-        <a href="#contact" className="inline-flex items-center justify-center gap-2 border border-white/25 text-white px-8 py-3.5 rounded-full font-semibold text-sm hover:border-teal-400 hover:text-teal-400 hover:scale-105 transition-all duration-300">
+        <a
+          href="#contact"
+          className="inline-flex items-center justify-center gap-2 border border-white/25 text-white px-8 py-3.5 rounded-full font-semibold text-sm hover:border-teal-400 hover:text-teal-400 hover:scale-105 transition-all duration-300"
+        >
           Contact Me
+        </a>
+        <a
+          href="/resume.pdf"
+          download
+          className="inline-flex items-center justify-center gap-2 border border-teal-400/40 text-teal-400 px-8 py-3.5 rounded-full font-semibold text-sm hover:bg-teal-400/10 hover:scale-105 transition-all duration-300"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+          Download CV
         </a>
       </div>
     </div>
@@ -88,58 +134,37 @@ export default function Hero() {
   return (
     <section id="home" className="overflow-hidden" style={{ background: '#07111f' }}>
 
-      {/* ═══════════════ MOBILE layout ═══════════════ */}
+      {/* ══ MOBILE ══ */}
       <div className="md:hidden flex flex-col min-h-screen">
-        {/* Photo top half */}
         <div className="relative w-full" style={{ height: '52vw', minHeight: 220, maxHeight: 340 }}>
-          <img
-            src={profileImg}
-            alt="Mannpreeth"
-            className="w-full h-full object-cover"
-            style={{ objectPosition: '50% 5%' }}
-          />
-          {/* bottom fade into dark bg */}
-          <div className="absolute inset-x-0 bottom-0 h-24"
-            style={{ background: 'linear-gradient(to top, #07111f, transparent)' }} />
-          {/* top fade behind navbar */}
-          <div className="absolute inset-x-0 top-0 h-20"
-            style={{ background: 'linear-gradient(to bottom, #07111f 20%, transparent)' }} />
+          <img src={profileImg} alt="Mannpreeth" className="w-full h-full object-cover" style={{ objectPosition: '50% 5%' }} />
+          <div className="absolute inset-x-0 bottom-0 h-24" style={{ background: 'linear-gradient(to top, #07111f, transparent)' }} />
+          <div className="absolute inset-x-0 top-0 h-20"  style={{ background: 'linear-gradient(to bottom, #07111f 20%, transparent)' }} />
         </div>
-
-        {/* Text below photo */}
+        <Particles />
         <div className="flex-1 px-6 pb-16 pt-4">
           <TextContent typed={typed} />
         </div>
       </div>
 
-      {/* ═══════════════ DESKTOP layout ═══════════════ */}
+      {/* ══ DESKTOP ══ */}
       <div className="hidden md:flex relative min-h-screen items-center">
-        {/* Photo — right side */}
-        <div className="absolute right-0 top-0 h-full w-[52%]">
-          <img
-            src={profileImg}
-            alt="Mannpreeth"
-            className="w-full h-full object-cover"
-            style={{ objectPosition: '50% 5%' }}
-          />
-          <div className="absolute inset-0"
-            style={{ background: 'linear-gradient(to right, #07111f 0%, rgba(7,17,31,0.45) 30%, transparent 65%)' }} />
-          <div className="absolute inset-x-0 bottom-0 h-40"
-            style={{ background: 'linear-gradient(to top, #07111f, transparent)' }} />
-          <div className="absolute inset-x-0 top-0 h-16"
-            style={{ background: 'linear-gradient(to bottom, #07111f, transparent)' }} />
-        </div>
+        <Particles />
 
-        {/* Dot grid */}
-        <div className="absolute inset-0 opacity-[0.04]"
-          style={{ backgroundImage: 'radial-gradient(#14b8a6 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
+        {/* Photo right */}
+        <div className="absolute right-0 top-0 h-full w-[52%]">
+          <img src={profileImg} alt="Mannpreeth" className="w-full h-full object-cover" style={{ objectPosition: '50% 5%' }} />
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, #07111f 0%, rgba(7,17,31,0.45) 30%, transparent 65%)' }} />
+          <div className="absolute inset-x-0 bottom-0 h-40" style={{ background: 'linear-gradient(to top, #07111f, transparent)' }} />
+          <div className="absolute inset-x-0 top-0 h-16"  style={{ background: 'linear-gradient(to bottom, #07111f, transparent)' }} />
+        </div>
 
         {/* Text */}
         <div className="relative z-10 max-w-7xl mx-auto px-8 w-full pt-28 pb-20">
           <TextContent typed={typed} />
         </div>
 
-        {/* Scroll indicator */}
+        {/* Scroll */}
         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 animate-bounce">
           <span className="text-gray-600 text-xs tracking-widest uppercase">Scroll</span>
           <svg className="w-5 h-5 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -147,7 +172,6 @@ export default function Hero() {
           </svg>
         </div>
       </div>
-
     </section>
   )
 }
