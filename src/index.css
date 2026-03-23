@@ -2,10 +2,13 @@
 
 * { font-family: 'Poppins', sans-serif; }
 html { scroll-behavior: smooth; }
-body { margin: 0; background-color: #07111f; cursor: none; }
+body { margin: 0; background-color: #07111f; }
 
-/* Hide default cursor (custom cursor takes over) */
-*, *::before, *::after { cursor: none !important; }
+/* Hide default cursor only on desktop (hover-capable devices) */
+@media (hover: hover) and (pointer: fine) {
+  body { cursor: none; }
+  *, *::before, *::after { cursor: none !important; }
+}
 
 @keyframes blink {
   0%, 100% { opacity: 1; }
