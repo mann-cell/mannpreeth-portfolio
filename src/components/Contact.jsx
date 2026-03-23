@@ -3,9 +3,9 @@ import emailjs from '@emailjs/browser'
 import { useInView } from '../hooks/useInView'
 
 // ── EmailJS config ── fill these in after creating your account at emailjs.com
-const EMAILJS_SERVICE_ID  = 'YOUR_SERVICE_ID'
-const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID'
-const EMAILJS_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY'
+const EMAILJS_SERVICE_ID  = 'service_21ht3lq'
+const EMAILJS_TEMPLATE_ID = 'template_wf4no8z'
+const EMAILJS_PUBLIC_KEY  = 'bwFcWi8DRG6rCHpZq'
 
 const contactItems = [
   {
